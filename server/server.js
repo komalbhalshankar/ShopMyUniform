@@ -11,7 +11,8 @@ const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
-const PORT = 5000;
+// Render provides PORT automatically
+const PORT = process.env.PORT || 5000;
 
 // ==========================================
 // MIDDLEWARE
@@ -47,6 +48,14 @@ app.get("/api/test", (req, res) => {
 });
 
 // ==========================================
+// START SERVER
+// ==========================================
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+// ==========================================
 // CONNECT TO MONGODB
 // ==========================================
 
@@ -54,10 +63,6 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("MongoDB connected successfully!");
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
   })
   .catch((error) => {
     console.error("MongoDB connection failed:", error.message);
