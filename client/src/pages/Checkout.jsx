@@ -6,14 +6,13 @@ function Checkout() {
   const navigate = useNavigate();
 
   const totalPrice = cart.reduce(
-    (total, product) =>
-      total + product.price * product.quantity,
-    0
+    (total, product) => total + product.price * product.quantity,
+    0,
   );
 
   const totalItems = cart.reduce(
     (total, product) => total + product.quantity,
-    0
+    0,
   );
 
   const handlePlaceOrder = async () => {
@@ -36,7 +35,7 @@ function Checkout() {
       }));
 
       const response = await fetch(
-        "http://localhost:5000/api/orders",
+        "https://shopmyuniform-qhwv.onrender.com/api/orders",
         {
           method: "POST",
           headers: {
@@ -47,7 +46,7 @@ function Checkout() {
             items: orderItems,
             totalAmount: totalPrice,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -74,32 +73,22 @@ function Checkout() {
   return (
     <div className="checkout-page">
       <div className="checkout-container">
-
         {/* =========================
             HEADER
         ========================= */}
 
         <div className="checkout-header">
-
           <div>
-            <div className="checkout-eyebrow">
-              🔐 ShopMyUniform
-            </div>
+            <div className="checkout-eyebrow">🔐 ShopMyUniform</div>
 
             <h1>Checkout</h1>
 
-            <p>
-              Review your order before placing it.
-            </p>
+            <p>Review your order before placing it.</p>
           </div>
 
-          <Link
-            to="/cart"
-            className="checkout-back-button"
-          >
+          <Link to="/cart" className="checkout-back-button">
             ← Back to Cart
           </Link>
-
         </div>
 
         {/* =========================
@@ -108,139 +97,87 @@ function Checkout() {
 
         {cart.length === 0 ? (
           <div className="checkout-empty">
-
-            <div className="checkout-empty-icon">
-              🛒
-            </div>
+            <div className="checkout-empty-icon">🛒</div>
 
             <h2>Your cart is empty</h2>
 
-            <p>
-              Add some school uniforms before
-              proceeding to checkout.
-            </p>
+            <p>Add some school uniforms before proceeding to checkout.</p>
 
-            <Link
-              to="/"
-              className="checkout-shop-button"
-            >
+            <Link to="/" className="checkout-shop-button">
               Continue Shopping
             </Link>
-
           </div>
         ) : (
-
           /* =========================
              CHECKOUT LAYOUT
           ========================= */
 
           <div className="checkout-layout">
-
             {/* =========================
                 ORDER ITEMS
             ========================= */}
 
             <div>
-
               <div className="checkout-section-heading">
-
                 <div>
                   <h2>Order Items</h2>
 
                   <p>
-                    {totalItems}{" "}
-                    {totalItems === 1
-                      ? "item"
-                      : "items"}{" "}
-                    in your order
+                    {totalItems} {totalItems === 1 ? "item" : "items"} in your
+                    order
                   </p>
                 </div>
-
               </div>
 
               <div className="checkout-items">
-
                 {cart.map((product) => (
-
-                  <div
-                    key={product._id}
-                    className="checkout-product-card"
-                  >
-
+                  <div key={product._id} className="checkout-product-card">
                     {/* IMAGE */}
 
                     <div className="checkout-product-image">
-  {product.category?.toLowerCase() === "shirt"
-    ? "👕"
-    : product.category?.toLowerCase() === "trousers"
-    ? "👖"
-    : product.category?.toLowerCase() === "blazer"
-    ? "🧥"
-    : product.category?.toLowerCase() === "accessories"
-    ? "🎒"
-    : "🎓"}
-</div>
+                      {product.category?.toLowerCase() === "shirt"
+                        ? "👕"
+                        : product.category?.toLowerCase() === "trousers"
+                          ? "👖"
+                          : product.category?.toLowerCase() === "blazer"
+                            ? "🧥"
+                            : product.category?.toLowerCase() === "accessories"
+                              ? "🎒"
+                              : "🎓"}
+                    </div>
 
                     {/* DETAILS */}
 
                     <div className="checkout-product-details">
-
                       <span className="checkout-product-category">
                         {product.category}
                       </span>
 
-                      <h3>
-                        {product.name}
-                      </h3>
+                      <h3>{product.name}</h3>
 
-                      {product.description && (
-                        <p>
-                          {product.description}
-                        </p>
-                      )}
+                      {product.description && <p>{product.description}</p>}
 
                       <div className="checkout-product-info">
-
                         <span>
-                          <strong>
-                            Price:
-                          </strong>{" "}
-                          ₹{product.price}
+                          <strong>Price:</strong> ₹{product.price}
                         </span>
 
                         <span>
-                          <strong>
-                            Quantity:
-                          </strong>{" "}
-                          {product.quantity}
+                          <strong>Quantity:</strong> {product.quantity}
                         </span>
-
                       </div>
-
                     </div>
 
                     {/* SUBTOTAL */}
 
                     <div className="checkout-product-subtotal">
+                      <span>SUBTOTAL</span>
 
-                      <span>
-                        SUBTOTAL
-                      </span>
-
-                      <strong>
-                        ₹
-                        {product.price *
-                          product.quantity}
-                      </strong>
-
+                      <strong>₹{product.price * product.quantity}</strong>
                     </div>
-
                   </div>
-
                 ))}
-
               </div>
-
             </div>
 
             {/* =========================
@@ -248,59 +185,32 @@ function Checkout() {
             ========================= */}
 
             <div className="checkout-summary">
-
-              <h2>
-                Order Summary
-              </h2>
+              <h2>Order Summary</h2>
 
               <div className="checkout-summary-row">
+                <span>Items</span>
 
-                <span>
-                  Items
-                </span>
-
-                <strong>
-                  {totalItems}
-                </strong>
-
+                <strong>{totalItems}</strong>
               </div>
 
               <div className="checkout-summary-row">
+                <span>Subtotal</span>
 
-                <span>
-                  Subtotal
-                </span>
-
-                <strong>
-                  ₹{totalPrice}
-                </strong>
-
+                <strong>₹{totalPrice}</strong>
               </div>
 
               <div className="checkout-summary-row">
+                <span>Delivery</span>
 
-                <span>
-                  Delivery
-                </span>
-
-                <strong className="checkout-free">
-                  FREE
-                </strong>
-
+                <strong className="checkout-free">FREE</strong>
               </div>
 
               <div className="checkout-summary-divider" />
 
               <div className="checkout-total">
+                <span>Total</span>
 
-                <span>
-                  Total
-                </span>
-
-                <strong>
-                  ₹{totalPrice}
-                </strong>
-
+                <strong>₹{totalPrice}</strong>
               </div>
 
               <button
@@ -310,15 +220,10 @@ function Checkout() {
                 Place Order →
               </button>
 
-              <div className="checkout-secure">
-                🔒 Secure checkout
-              </div>
-
+              <div className="checkout-secure">🔒 Secure checkout</div>
             </div>
-
           </div>
         )}
-
       </div>
     </div>
   );

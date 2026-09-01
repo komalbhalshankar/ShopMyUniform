@@ -31,12 +31,12 @@ function AdminDashboard() {
       // ==========================================
 
       const statsResponse = await fetch(
-        "http://localhost:5000/api/admin/stats",
+        "https://shopmyuniform-qhwv.onrender.com/api/admin/stats",
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!statsResponse.ok) {
@@ -52,12 +52,12 @@ function AdminDashboard() {
       // ==========================================
 
       const usersResponse = await fetch(
-        "http://localhost:5000/api/admin/users",
+        "https://shopmyuniform-qhwv.onrender.com/api/admin/users",
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (usersResponse.ok) {
@@ -71,12 +71,12 @@ function AdminDashboard() {
       // ==========================================
 
       const ordersResponse = await fetch(
-        "http://localhost:5000/api/admin/orders",
+        "https://shopmyuniform-qhwv.onrender.com/api/admin/orders",
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!ordersResponse.ok) {
@@ -100,13 +100,10 @@ function AdminDashboard() {
       });
 
       setSelectedStatus(statusMap);
-
     } catch (error) {
       console.error("Admin dashboard error:", error);
 
-      setMessage(
-        "Failed to load dashboard data. Please try again."
-      );
+      setMessage("Failed to load dashboard data. Please try again.");
     } finally {
       if (showLoader) {
         setLoading(false);
@@ -123,55 +120,50 @@ function AdminDashboard() {
   }, []);
 
   // ==========================================
-// DELETE USER
-// ==========================================
+  // DELETE USER
+  // ==========================================
 
-const handleDeleteUser = async (userId, userName) => {
-  const confirmed = window.confirm(
-    `Are you sure you want to delete ${userName}?`
-  );
-
-  if (!confirmed) {
-    return;
-  }
-
-  try {
-    setMessage("");
-
-    const response = await fetch(
-      `http://localhost:5000/api/admin/users/${userId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+  const handleDeleteUser = async (userId, userName) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${userName}?`,
     );
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.message || "Failed to delete user");
+    if (!confirmed) {
       return;
     }
 
-    // Remove user immediately from screen
-    setUsers((previousUsers) =>
-      previousUsers.filter(
-        (user) => user._id !== userId
-      )
-    );
+    try {
+      setMessage("");
 
-    alert("User deleted successfully.");
+      const response = await fetch(
+        `https://shopmyuniform-qhwv.onrender.com/api/admin/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
-  } catch (error) {
-    console.error("Delete user error:", error);
+      const data = await response.json();
 
-    alert(
-      "Server error. Please try again."
-    );
-  }
-};
+      if (!response.ok) {
+        alert(data.message || "Failed to delete user");
+        return;
+      }
+
+      // Remove user immediately from screen
+      setUsers((previousUsers) =>
+        previousUsers.filter((user) => user._id !== userId),
+      );
+
+      alert("User deleted successfully.");
+    } catch (error) {
+      console.error("Delete user error:", error);
+
+      alert("Server error. Please try again.");
+    }
+  };
 
   // ==========================================
   // UPDATE ORDER STATUS
@@ -188,7 +180,7 @@ const handleDeleteUser = async (userId, userName) => {
       // ==========================================
 
       const response = await fetch(
-        `http://localhost:5000/api/admin/orders/${orderId}/status`,
+        `https://shopmyuniform-qhwv.onrender.com/api/admin/orders/${orderId}/status`,
         {
           method: "PUT",
 
@@ -200,7 +192,7 @@ const handleDeleteUser = async (userId, userName) => {
           body: JSON.stringify({
             status: newStatus,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -210,9 +202,7 @@ const handleDeleteUser = async (userId, userName) => {
       // ==========================================
 
       if (!response.ok) {
-        alert(
-          data.message || "Failed to update order status"
-        );
+        alert(data.message || "Failed to update order status");
 
         return;
       }
@@ -228,8 +218,8 @@ const handleDeleteUser = async (userId, userName) => {
                 ...order,
                 status: data.order.status,
               }
-            : order
-        )
+            : order,
+        ),
       );
 
       // ==========================================
@@ -248,16 +238,10 @@ const handleDeleteUser = async (userId, userName) => {
       await fetchDashboardData(false);
 
       alert("Order status updated successfully!");
-
     } catch (error) {
-      console.error(
-        "Update order status error:",
-        error
-      );
+      console.error("Update order status error:", error);
 
-      alert(
-        "Server error. Please try again."
-      );
+      alert("Server error. Please try again.");
     } finally {
       setUpdatingOrder(null);
     }
@@ -283,50 +267,35 @@ const handleDeleteUser = async (userId, userName) => {
 
   return (
     <div className="admin-page">
-
       {/* ======================================
           HEADER
       ====================================== */}
 
-     
+      <div className="admin-header">
+        <div>
+          <h1>Admin Dashboard</h1>
 
-<div className="admin-header">
+          <p>
+            Welcome, <strong>ShopMyUniform Admin</strong>
+          </p>
+        </div>
 
-  <div>
-    <h1>Admin Dashboard</h1>
+        <div className="admin-header-actions">
+          <Link to="/admin/products">
+            <button type="button">Product Management</button>
+          </Link>
 
-    <p>
-      Welcome, <strong>ShopMyUniform Admin</strong>
-    </p>
-  </div>
-
-  <div className="admin-header-actions">
-
-    <Link to="/admin/products">
-      <button type="button">
-        Product Management
-      </button>
-    </Link>
-
-    <Link to="/">
-      <button type="button">
-        ← Back to Store
-      </button>
-    </Link>
-
-  </div>
-
-</div>
+          <Link to="/">
+            <button type="button">← Back to Store</button>
+          </Link>
+        </div>
+      </div>
 
       {/* ======================================
           ERROR MESSAGE
       ====================================== */}
 
-      {message && (
-        <p style={{ color: "red" }}>
-          {message}
-        </p>
-      )}
+      {message && <p style={{ color: "red" }}>{message}</p>}
 
       {/* ======================================
           STATISTICS
@@ -337,7 +306,6 @@ const handleDeleteUser = async (userId, userName) => {
           <h2>Dashboard Statistics</h2>
 
           <div className="stats-grid">
-
             <div className="stat-card">
               <h3>Total Users</h3>
               <p>{stats.totalUsers}</p>
@@ -377,7 +345,6 @@ const handleDeleteUser = async (userId, userName) => {
               <h3>Total Sales</h3>
               <p>₹{stats.totalSales}</p>
             </div>
-
           </div>
         </>
       )}
@@ -389,71 +356,46 @@ const handleDeleteUser = async (userId, userName) => {
       <h2>Registered Users</h2>
 
       <div className="table-container">
-
         <table>
-
           <thead>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Role</th>
-    <th>School</th>
-    <th>Class</th>
-    <th>Action</th>
-  </tr>
-</thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>School</th>
+              <th>Class</th>
+              <th>Action</th>
+            </tr>
+          </thead>
           <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.name}</td>
 
-  {users.map((user) => (
-    <tr key={user._id}>
+                <td>{user.email}</td>
 
-      <td>{user.name}</td>
+                <td>{user.role}</td>
 
-      <td>{user.email}</td>
+                <td>{user.school || "-"}</td>
 
-      <td>{user.role}</td>
+                <td>{user.studentClass || "-"}</td>
 
-      <td>
-        {user.school || "-"}
-      </td>
-
-      <td>
-        {user.studentClass || "-"}
-      </td>
-
-      <td>
-
-        {user.role === "admin" ? (
-
-          <span>
-            Admin
-          </span>
-
-        ) : (
-
-          <button
-            type="button"
-            onClick={() =>
-              handleDeleteUser(
-                user._id,
-                user.name
-              )
-            }
-          >
-            Delete
-          </button>
-
-        )}
-
-      </td>
-
-    </tr>
-  ))}
-
-</tbody>
-
+                <td>
+                  {user.role === "admin" ? (
+                    <span>Admin</span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteUser(user._id, user.name)}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
-
       </div>
 
       {/* ======================================
@@ -461,61 +403,33 @@ const handleDeleteUser = async (userId, userName) => {
       ====================================== */}
 
       <div className="orders-section">
-
         <div className="section-heading">
-
           <div>
             <h2>Order Management</h2>
 
-            <p>
-              Manage customer orders and update
-              their delivery status.
-            </p>
+            <p>Manage customer orders and update their delivery status.</p>
           </div>
-
         </div>
 
         {orders.length === 0 ? (
-
           <div className="empty-state">
-
             <h3>No orders found</h3>
 
-            <p>
-              There are currently no customer orders.
-            </p>
-
+            <p>There are currently no customer orders.</p>
           </div>
-
         ) : (
-
           <div className="admin-orders">
-
             {orders.map((order) => (
-
-              <div
-                key={order._id}
-                className="admin-order-card"
-              >
-
+              <div key={order._id} className="admin-order-card">
                 {/* ======================================
                     ORDER HEADER
                 ====================================== */}
 
                 <div className="order-header">
-
                   <div>
+                    <h3>Order #{order._id.slice(-6)}</h3>
 
-                    <h3>
-                      Order #{order._id.slice(-6)}
-                    </h3>
-
-                    <p>
-                      {new Date(
-                        order.createdAt
-                      ).toLocaleString()}
-                    </p>
-
+                    <p>{new Date(order.createdAt).toLocaleString()}</p>
                   </div>
 
                   <span
@@ -523,7 +437,6 @@ const handleDeleteUser = async (userId, userName) => {
                   >
                     {order.status}
                   </span>
-
                 </div>
 
                 {/* ======================================
@@ -531,35 +444,22 @@ const handleDeleteUser = async (userId, userName) => {
                 ====================================== */}
 
                 <div className="order-summary">
-
                   <div>
+                    <strong>Total Amount</strong>
 
-                    <strong>
-                      Total Amount
-                    </strong>
-
-                    <p>
-                      ₹{order.totalAmount}
-                    </p>
-
+                    <p>₹{order.totalAmount}</p>
                   </div>
 
                   <div>
-
-                    <strong>
-                      Items
-                    </strong>
+                    <strong>Items</strong>
 
                     <p>
                       {order.items.reduce(
-                        (total, item) =>
-                          total + item.quantity,
-                        0
+                        (total, item) => total + item.quantity,
+                        0,
                       )}
                     </p>
-
                   </div>
-
                 </div>
 
                 {/* ======================================
@@ -567,33 +467,17 @@ const handleDeleteUser = async (userId, userName) => {
                 ====================================== */}
 
                 <div className="order-items">
+                  <h4>Ordered Items</h4>
 
-                  <h4>
-                    Ordered Items
-                  </h4>
+                  {order.items.map((item, index) => (
+                    <div key={index} className="order-item">
+                      <span>{item.name}</span>
 
-                  {order.items.map(
-                    (item, index) => (
-
-                      <div
-                        key={index}
-                        className="order-item"
-                      >
-
-                        <span>
-                          {item.name}
-                        </span>
-
-                        <span>
-                          ₹{item.price} ×{" "}
-                          {item.quantity}
-                        </span>
-
-                      </div>
-
-                    )
-                  )}
-
+                      <span>
+                        ₹{item.price} × {item.quantity}
+                      </span>
+                    </div>
+                  ))}
                 </div>
 
                 {/* ======================================
@@ -601,80 +485,42 @@ const handleDeleteUser = async (userId, userName) => {
                 ====================================== */}
 
                 <div className="status-control">
-
-                  <label>
-                    Update Status
-                  </label>
+                  <label>Update Status</label>
 
                   <select
-                    value={
-                      selectedStatus[order._id] ||
-                      order.status
-                    }
+                    value={selectedStatus[order._id] || order.status}
                     onChange={(e) =>
-                      setSelectedStatus(
-                        (previousStatus) => ({
-                          ...previousStatus,
-                          [order._id]:
-                            e.target.value,
-                        })
-                      )
+                      setSelectedStatus((previousStatus) => ({
+                        ...previousStatus,
+                        [order._id]: e.target.value,
+                      }))
                     }
                   >
+                    <option value="Pending">Pending</option>
 
-                    <option value="Pending">
-                      Pending
-                    </option>
+                    <option value="Processing">Processing</option>
 
-                    <option value="Processing">
-                      Processing
-                    </option>
+                    <option value="Shipped">Shipped</option>
 
-                    <option value="Shipped">
-                      Shipped
-                    </option>
+                    <option value="Delivered">Delivered</option>
 
-                    <option value="Delivered">
-                      Delivered
-                    </option>
-
-                    <option value="Cancelled">
-                      Cancelled
-                    </option>
-
+                    <option value="Cancelled">Cancelled</option>
                   </select>
 
                   <button
-                    onClick={() =>
-                      handleStatusChange(
-                        order._id
-                      )
-                    }
-                    disabled={
-                      updatingOrder ===
-                      order._id
-                    }
+                    onClick={() => handleStatusChange(order._id)}
+                    disabled={updatingOrder === order._id}
                   >
-
-                    {updatingOrder ===
-                    order._id
+                    {updatingOrder === order._id
                       ? "Updating..."
                       : "Update Status"}
-
                   </button>
-
                 </div>
-
               </div>
-
             ))}
-
           </div>
-
         )}
-
       </div>
-
     </div>
   );
 }

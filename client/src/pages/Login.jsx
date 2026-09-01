@@ -18,7 +18,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        "https://shopmyuniform-qhwv.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: {
@@ -28,7 +28,7 @@ function Login() {
             email,
             password,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -41,10 +41,7 @@ function Login() {
 
       // Save login information
       localStorage.setItem("token", data.token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       alert("Login successful!");
 
@@ -57,13 +54,10 @@ function Login() {
       } else {
         navigate("/");
       }
-
     } catch (error) {
       console.error("Login error:", error);
 
-      setMessage(
-        "Unable to connect to server. Please try again."
-      );
+      setMessage("Unable to connect to server. Please try again.");
     }
 
     setLoading(false);
@@ -71,73 +65,45 @@ function Login() {
 
   return (
     <div className="auth-container">
-
       <div className="auth-card">
-
         <h1>Login</h1>
 
         <form onSubmit={handleLogin}>
-
           <div className="form-group">
-
-            <label>
-              Email
-            </label>
+            <label>Email</label>
 
             <input
               type="email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
             />
-
           </div>
 
           <div className="form-group">
-
-            <label>
-              Password
-            </label>
+            <label>Password</label>
 
             <input
               type="password"
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
             />
-
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-          >
+          <button type="submit" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
-
         </form>
 
-        {message && (
-          <p className="error-message">
-            {message}
-          </p>
-        )}
+        {message && <p className="error-message">{message}</p>}
 
         <p>
-          Don't have an account?{" "}
-          <Link to="/register">
-            Register
-          </Link>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
-
       </div>
-
     </div>
   );
 }

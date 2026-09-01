@@ -40,32 +40,30 @@ function Chatbot() {
       }
 
       const response = await fetch(
-        "http://localhost:5000/api/ai/chat",
+        "https://shopmyuniform-qhwv.onrender.com/api/ai/chat",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-  message: userMessage,
-  userId: userId,
-  conversation: [
-    ...messages,
-    {
-      sender: "user",
-      text: userMessage,
-    },
-  ],
-}),
-        }
+            message: userMessage,
+            userId: userId,
+            conversation: [
+              ...messages,
+              {
+                sender: "user",
+                text: userMessage,
+              },
+            ],
+          }),
+        },
       );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "AI request failed"
-        );
+        throw new Error(data.message || "AI request failed");
       }
 
       setMessages((previousMessages) => [
@@ -137,10 +135,7 @@ function Chatbot() {
             key={index}
             style={{
               marginBottom: "12px",
-              textAlign:
-                chat.sender === "user"
-                  ? "right"
-                  : "left",
+              textAlign: chat.sender === "user" ? "right" : "left",
             }}
           >
             <span
@@ -149,10 +144,7 @@ function Chatbot() {
                 padding: "10px",
                 borderRadius: "10px",
                 maxWidth: "80%",
-                backgroundColor:
-                  chat.sender === "user"
-                    ? "#dbeafe"
-                    : "#e5e7eb",
+                backgroundColor: chat.sender === "user" ? "#dbeafe" : "#e5e7eb",
               }}
             >
               {chat.text}
@@ -160,11 +152,7 @@ function Chatbot() {
           </div>
         ))}
 
-        {loading && (
-          <p style={{ color: "#666" }}>
-            AI is typing...
-          </p>
-        )}
+        {loading && <p style={{ color: "#666" }}>AI is typing...</p>}
       </div>
 
       {/* Input */}
@@ -190,10 +178,7 @@ function Chatbot() {
           }}
         />
 
-        <button
-          onClick={sendMessage}
-          disabled={loading}
-        >
+        <button onClick={sendMessage} disabled={loading}>
           Send
         </button>
       </div>

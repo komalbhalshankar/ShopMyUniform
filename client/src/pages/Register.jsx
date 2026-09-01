@@ -5,13 +5,13 @@ function Register() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-  name: "",
-  email: "",
-  password: "",
-  role: "student",
-  school: "",
-  studentClass: "",
-});
+    name: "",
+    email: "",
+    password: "",
+    role: "student",
+    school: "",
+    studentClass: "",
+  });
 
   const [message, setMessage] = useState("");
 
@@ -29,14 +29,14 @@ function Register() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/register",
+        "https://shopmyuniform-qhwv.onrender.com/api/auth/register",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       const data = await response.json();
@@ -84,17 +84,17 @@ function Register() {
           />
         </div>
         <div style={{ marginBottom: "15px" }}>
-  <label>Class / Grade</label>
-  <br />
+          <label>Class / Grade</label>
+          <br />
 
-  <input
-    type="text"
-    name="studentClass"
-    value={formData.studentClass}
-    onChange={handleChange}
-    placeholder="Enter your class"
-  />
-</div>
+          <input
+            type="text"
+            name="studentClass"
+            value={formData.studentClass}
+            onChange={handleChange}
+            placeholder="Enter your class"
+          />
+        </div>
 
         <div style={{ marginBottom: "15px" }}>
           <label>Password</label>
@@ -112,11 +112,7 @@ function Register() {
           <label>Role</label>
           <br />
 
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-          >
+          <select name="role" value={formData.role} onChange={handleChange}>
             <option value="student">Student</option>
             <option value="parent">Parent</option>
           </select>
@@ -135,20 +131,13 @@ function Register() {
           />
         </div>
 
-        <button type="submit">
-          Register
-        </button>
+        <button type="submit">Register</button>
       </form>
 
-      {message && (
-        <p style={{ color: "red" }}>
-          {message}
-        </p>
-      )}
+      {message && <p style={{ color: "red" }}>{message}</p>}
 
       <p>
-        Already have an account?{" "}
-        <Link to="/login">Login</Link>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </div>
   );
