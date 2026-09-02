@@ -24,7 +24,6 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setMessage("");
 
     try {
@@ -47,7 +46,6 @@ function Register() {
       }
 
       alert("Registration successful!");
-
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
@@ -56,91 +54,265 @@ function Register() {
   };
 
   return (
-    <div style={{ padding: "30px", maxWidth: "500px", margin: "auto" }}>
-      <h1>Create Account</h1>
+    <div
+      style={{
+        minHeight: "calc(100vh - 80px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "40px 20px",
+        backgroundColor: "#f8fafc",
+      }}
+    >
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "520px",
+          backgroundColor: "white",
+          padding: "35px",
+          borderRadius: "16px",
+          border: "1px solid #dbe3ef",
+          boxShadow: "0 8px 25px rgba(15, 23, 42, 0.08)",
+        }}
+      >
+        <div style={{ textAlign: "center", marginBottom: "30px" }}>
+          <div
+            style={{
+              fontSize: "32px",
+              marginBottom: "8px",
+            }}
+          >
+            🎓
+          </div>
 
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Name</label>
-          <br />
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+          <h1
+            style={{
+              margin: 0,
+              color: "#111827",
+              fontSize: "32px",
+              fontWeight: "700",
+            }}
+          >
+            Create Account
+          </h1>
+
+          <p
+            style={{
+              marginTop: "8px",
+              color: "#64748b",
+              fontSize: "14px",
+            }}
+          >
+            Join ShopMyUniform and start shopping
+          </p>
         </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>Email</label>
-          <br />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Class / Grade</label>
-          <br />
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: "18px" }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: "7px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              Name
+            </label>
 
-          <input
-            type="text"
-            name="studentClass"
-            value={formData.studentClass}
-            onChange={handleChange}
-            placeholder="Enter your class"
-          />
-        </div>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+              required
+              style={inputStyle}
+            />
+          </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>Password</label>
-          <br />
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div style={{ marginBottom: "18px" }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: "7px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              Email
+            </label>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>Role</label>
-          <br />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              required
+              style={inputStyle}
+            />
+          </div>
 
-          <select name="role" value={formData.role} onChange={handleChange}>
-            <option value="student">Student</option>
-            <option value="parent">Parent</option>
-          </select>
-        </div>
+          <div style={{ marginBottom: "18px" }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: "7px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              Class / Grade
+            </label>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>School</label>
-          <br />
+            <input
+              type="text"
+              name="studentClass"
+              value={formData.studentClass}
+              onChange={handleChange}
+              placeholder="Enter your class"
+              style={inputStyle}
+            />
+          </div>
 
-          <input
-            type="text"
-            name="school"
-            value={formData.school}
-            onChange={handleChange}
-            placeholder="Enter your school"
-          />
-        </div>
+          <div style={{ marginBottom: "18px" }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: "7px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              Password
+            </label>
 
-        <button type="submit">Register</button>
-      </form>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Create a password"
+              required
+              style={inputStyle}
+            />
+          </div>
 
-      {message && <p style={{ color: "red" }}>{message}</p>}
+          <div style={{ marginBottom: "18px" }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: "7px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              Role
+            </label>
 
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              style={inputStyle}
+            >
+              <option value="student">Student</option>
+              <option value="parent">Parent</option>
+            </select>
+          </div>
+
+          <div style={{ marginBottom: "24px" }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: "7px",
+                fontWeight: "600",
+                color: "#111827",
+              }}
+            >
+              School
+            </label>
+
+            <input
+              type="text"
+              name="school"
+              value={formData.school}
+              onChange={handleChange}
+              placeholder="Enter your school"
+              style={inputStyle}
+            />
+          </div>
+
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "13px",
+              border: "none",
+              borderRadius: "8px",
+              backgroundColor: "#172033",
+              color: "white",
+              fontSize: "15px",
+              fontWeight: "600",
+              cursor: "pointer",
+            }}
+          >
+            Create Account
+          </button>
+        </form>
+
+        {message && (
+          <div
+            style={{
+              marginTop: "20px",
+              padding: "12px",
+              borderRadius: "8px",
+              backgroundColor: "#fef2f2",
+              color: "#dc2626",
+              textAlign: "center",
+              fontSize: "14px",
+            }}
+          >
+            {message}
+          </div>
+        )}
+
+        <p
+          style={{
+            textAlign: "center",
+            marginTop: "25px",
+            color: "#64748b",
+            fontSize: "14px",
+          }}
+        >
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            style={{
+              color: "#111827",
+              fontWeight: "700",
+              textDecoration: "none",
+            }}
+          >
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
+
+const inputStyle = {
+  width: "100%",
+  boxSizing: "border-box",
+  padding: "12px 14px",
+  border: "1px solid #cbd5e1",
+  borderRadius: "8px",
+  fontSize: "14px",
+  color: "#111827",
+  backgroundColor: "white",
+  outline: "none",
+};
 
 export default Register;

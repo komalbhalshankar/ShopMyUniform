@@ -43,7 +43,7 @@ function App() {
       {/* ========================= */}
 
       <nav className="navbar">
-        <div className="logo">ShopMyUniform</div>
+        <div className="logo">🎓 ShopMyUniform</div>
 
         <div className="nav-links">
           <Link to="/">Products</Link>
