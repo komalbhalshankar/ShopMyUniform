@@ -20,7 +20,7 @@ function Orders() {
         const user = JSON.parse(storedUser);
 
         const response = await fetch(
-          `https://shopmyuniform-qhwv.onrender.com/api/orders/user/${user.id}`,
+          `https://shopmyuniform-qhwu.onrender.com/api/orders/user/${user.id}`,
         );
 
         const data = await response.json();

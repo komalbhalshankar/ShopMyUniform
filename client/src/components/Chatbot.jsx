@@ -40,7 +40,7 @@ function Chatbot() {
       }
 
       const response = await fetch(
-        "https://shopmyuniform-qhwv.onrender.com/api/ai/chat",
+        "https://shopmyuniform-qhwu.onrender.com/api/ai/chat",
         {
           method: "POST",
           headers: {

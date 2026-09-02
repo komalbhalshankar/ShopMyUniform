@@ -31,7 +31,7 @@ function AdminDashboard() {
       // ==========================================
 
       const statsResponse = await fetch(
-        "https://shopmyuniform-qhwv.onrender.com/api/admin/stats",
+        "https://shopmyuniform-qhwu.onrender.com/api/admin/stats",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ function AdminDashboard() {
       // ==========================================
 
       const usersResponse = await fetch(
-        "https://shopmyuniform-qhwv.onrender.com/api/admin/users",
+        "https://shopmyuniform-qhwu.onrender.com/api/admin/users",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ function AdminDashboard() {
       // ==========================================
 
       const ordersResponse = await fetch(
-        "https://shopmyuniform-qhwv.onrender.com/api/admin/orders",
+        "https://shopmyuniform-qhwu.onrender.com/api/admin/orders",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -136,7 +136,7 @@ function AdminDashboard() {
       setMessage("");
 
       const response = await fetch(
-        `https://shopmyuniform-qhwv.onrender.com/api/admin/users/${userId}`,
+        `https://shopmyuniform-qhwu.onrender.com/api/admin/users/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -180,7 +180,7 @@ function AdminDashboard() {
       // ==========================================
 
       const response = await fetch(
-        `https://shopmyuniform-qhwv.onrender.com/api/admin/orders/${orderId}/status`,
+        `https://shopmyuniform-qhwu.onrender.com/api/admin/orders/${orderId}/status`,
         {
           method: "PUT",
 

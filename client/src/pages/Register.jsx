@@ -29,7 +29,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "https://shopmyuniform-qhwv.onrender.com/api/auth/register",
+        "https://shopmyuniform-qhwu.onrender.com/api/auth/register",
         {
           method: "POST",
           headers: {

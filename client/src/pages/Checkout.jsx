@@ -35,7 +35,7 @@ function Checkout() {
       }));
 
       const response = await fetch(
-        "https://shopmyuniform-qhwv.onrender.com/api/orders",
+        "https://shopmyuniform-qhwu.onrender.com/api/orders",
         {
           method: "POST",
           headers: {

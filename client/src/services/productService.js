@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://shopmyuniform-qhwv.onrender.com/api/products";
+const API_URL = "https://shopmyuniform-qhwu.onrender.com/api/products";
 
 // Get all products
 export const getProducts = async () => {
