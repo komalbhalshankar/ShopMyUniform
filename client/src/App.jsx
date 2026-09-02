@@ -13,7 +13,6 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminRoute from "./components/AdminRoute";
 import AdminProducts from "./pages/AdminProducts";
 
-
 import Chatbot from "./components/Chatbot";
 
 function App() {
@@ -23,13 +22,11 @@ function App() {
 
   const storedUser = localStorage.getItem("user");
 
-  const user = storedUser
-    ? JSON.parse(storedUser)
-    : null;
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
   const totalItems = cart.reduce(
     (total, product) => total + product.quantity,
-    0
+    0,
   );
 
   const handleLogout = () => {
@@ -46,63 +43,38 @@ function App() {
       {/* ========================= */}
 
       <nav className="navbar">
-
-        <div className="logo">
-          ShopMyUniform
-        </div>
+        <div className="logo">ShopMyUniform</div>
 
         <div className="nav-links">
+          <Link to="/">Products</Link>
 
-          <Link to="/">
-            Products
-          </Link>
-
-          <Link
-            to="/cart"
-            className="cart-link"
-          >
+          <Link to="/cart" className="cart-link">
             🛒 Cart ({totalItems})
           </Link>
 
           {token && user ? (
             <>
-              <Link to="/profile">
-                Profile
-              </Link>
+              <Link to="/profile">Profile</Link>
 
-              <Link to="/orders">
-                My Orders
-              </Link>
+              <Link to="/orders">My Orders</Link>
 
               {/* ADMIN DASHBOARD */}
               {user.role === "admin" && (
-                <Link to="/admin">
-                  Admin Dashboard
-                </Link>
+                <Link to="/admin">Admin Dashboard</Link>
               )}
 
-              <button onClick={handleLogout}>
-                Logout
-              </button>
+              <button onClick={handleLogout}>Logout</button>
             </>
-        ) : (
-  <>
-    <Link to="/login">
-      Login
-    </Link>
+          ) : (
+            <>
+              <Link to="/login">Login</Link>
 
-    <Link to="/register">
-      Register
-    </Link>
+              <Link to="/register">Register</Link>
 
-    <Link to="/admin-login">
-      Admin Login
-    </Link>
-  </>
-)}
-
+              <Link to="/admin-login">Admin Login</Link>
+            </>
+          )}
         </div>
-
       </nav>
 
       {/* ========================= */}
@@ -110,76 +82,43 @@ function App() {
       {/* ========================= */}
 
       <main className="page-container">
-
         <Routes>
+          <Route path="/" element={<Products />} />
+
+          <Route path="/cart" element={<Cart />} />
+
+          <Route path="/checkout" element={<Checkout />} />
 
           <Route
-            path="/"
-            element={<Products />}
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
+            }
           />
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/register" element={<Register />} />
+
+          <Route path="/profile" element={<Profile />} />
+
+          <Route path="/orders" element={<Orders />} />
+
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+
+          <Route path="/admin-login" element={<AdminLogin />} />
 
           <Route
-            path="/cart"
-            element={<Cart />}
+            path="/admin/products"
+            element={
+              <AdminRoute>
+                <AdminProducts />
+              </AdminRoute>
+            }
           />
-
-          <Route
-            path="/checkout"
-            element={<Checkout />}
-          />
-
-          <Route
-  path="/admin"
-  element={
-    <AdminRoute>
-      <AdminDashboard />
-    </AdminRoute>
-  }
-/>
-          <Route
-            path="/register"
-            element={<Register />}
-          />
-
-          <Route
-            path="/profile"
-            element={<Profile />}
-          />
-
-          <Route
-            path="/orders"
-            element={<Orders />}
-          />
-
-          <Route
-  path="/admin"
-  element={<AdminDashboard />}
-/>
-          <Route
-  path="/admin/products"
-  element={<AdminProducts />}
-/>
-
-          <Route
-            path="/admin-login"
-            element={<AdminLogin />}
-          />
-          
-          
-
-<Route
-  path="/admin/products"
-  element={
-    <AdminRoute>
-      <AdminProducts />
-    </AdminRoute>
-  }
-/>
-
-
-
         </Routes>
-
       </main>
 
       {/* ========================= */}
@@ -187,7 +126,6 @@ function App() {
       {/* ========================= */}
 
       <Chatbot />
-
     </>
   );
 }
