@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function Chatbot() {
   const [message, setMessage] = useState("");
+
   const [messages, setMessages] = useState([
     {
       sender: "ai",
@@ -10,6 +11,9 @@ function Chatbot() {
   ]);
 
   const [loading, setLoading] = useState(false);
+
+  // Controls whether chatbot window is visible
+  const [isOpen, setIsOpen] = useState(true);
 
   const sendMessage = async () => {
     if (!message.trim() || loading) {
@@ -94,6 +98,33 @@ function Chatbot() {
     }
   };
 
+  // When chatbot is minimized, show only the floating button
+  if (!isOpen) {
+    return (
+      <button
+        onClick={() => setIsOpen(true)}
+        title="Open ShopMyUniform Support"
+        style={{
+          position: "fixed",
+          right: "25px",
+          bottom: "25px",
+          width: "55px",
+          height: "55px",
+          borderRadius: "50%",
+          border: "none",
+          backgroundColor: "#1f2937",
+          color: "white",
+          fontSize: "24px",
+          cursor: "pointer",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.25)",
+          zIndex: 1000,
+        }}
+      >
+        🤖
+      </button>
+    );
+  }
+
   return (
     <div
       style={{
@@ -116,9 +147,28 @@ function Chatbot() {
           color: "white",
           padding: "15px",
           fontWeight: "bold",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        🤖 ShopMyUniform Support
+        <span>🤖 ShopMyUniform Support</span>
+
+        {/* Minimize button */}
+        <button
+          onClick={() => setIsOpen(false)}
+          title="Minimize chatbot"
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "white",
+            fontSize: "20px",
+            cursor: "pointer",
+            padding: "0 4px",
+          }}
+        >
+          ✕
+        </button>
       </div>
 
       {/* Messages */}
